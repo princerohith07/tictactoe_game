@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe Game</title>
+    <!-- Add any CSS stylesheets here -->
+</head>
+<body>
+    <h1>Tic-Tac-Toe Game</h1>
+    <p>this is index view</p>
+    <button id="multiplayer">Multiplayer</button>
+    <button id="play_with_bot">Play with Bot</button>
+
+    <script>
+        document.getElementById('multiplayer').addEventListener('click', function() {
+            window.location.href = '/tictactoe_game/multiplayer';
+        });
+
+        document.getElementById('play_with_bot').addEventListener('click', function() {
+            window.location.href = '/tictactoe_game/play_with_bot';
+        });
+    </script>
+</body>
+</html>

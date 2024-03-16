@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge to a Friend!</title>
+</head>
+<body>
+    <h1>Tic-Tac-Toe: Multiplayer</h1>
+    <button id="create" >Create Room</button>
+    <button id="join" >Join Room</button>
+
+    <script>
+
+        var websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer/");
+
+        websocket.onopen = function(event) {
+            console.log("Connected to the WebSocket server");
+        };
+
+        websocket.onmessage = function(event) {
+            var data = JSON.parse(event.data);
+            if (data.type === "room_created") {
+                // Redirect to the game page with the room code in the URL
+                window.location.href = "/tictactoe_game/multiplayer/" + data.room_code + "/";
+            } else if (data.type === "room_joined") {
+                // Redirect to the game page with the room code in the URL
+                window.location.href = "/tictactoe_game/multiplayer/" + data.room_code + "/";
+            }
+        };
+
+        websocket.onclose = function(event) {
+            if (event.wasClean) {
+                console.log("Connection closed cleanly, code=" + event.code + " reason=" + event.reason);
+            } else {
+                console.error("Connection died");
+            }
+        };
+
+        websocket.onerror = function(error) {
+            console.error("Error: " + error.message);
+        };
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add event listener for the "Create a Room" button
+            document.getElementById("create").addEventListener("click", function() {
+                createRoom();
+            });
+        
+            // Add event listener for the "Join a Room" button
+            document.getElementById("join").addEventListener("click", function() {
+                joinRoom();
+            });
+        });
+        
+        function createRoom() {
+            // Send a WebSocket message to the server to create a room
+            websocket.send(JSON.stringify({
+                'type': 'create_room'
+            }));
+        }
+        
+        function joinRoom() {
+            // Prompt the user to enter a room code
+            var roomCode = prompt("Enter the room code:");
+            if (roomCode) {
+                // Send a WebSocket message to the server to join the specified room
+                websocket.send(JSON.stringify({
+                    'type': 'join_room',
+                    'room_code': roomCode
+                }));
+            }
+        }
+        </script>
+        
+</body>
+</html>

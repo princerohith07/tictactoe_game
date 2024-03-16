@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin</title>
+    <style>
+        :root {
+            --color-gray: #8c97b7;
+            --color-blue: #1c38f1;
+            --color-green: #1fcdb0;
+            --input-height: 3rem;
+        }
+        /* body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9fbff;
+            margin: 0;
+            height: 100vh;
+        } */
+        h1 {
+            text-align: center;
+            color: var(--color-blue);
+
+        }
+
+
+        .ui-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ui-input {
+            height: var(--input-height);
+            width: 300px;
+            padding: 0 1rem;
+            border: 1px solid var(--color-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .ui-input:focus {
+            outline: none;
+            border-color: var(--color-blue);
+        }
+
+        
+
+
+        .ui-button {
+            height: var(--input-height);
+            width: 300px;
+            background-color: var(--color-gray);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .ui-button:hover {
+            background-color: var(--color-blue);
+        }
+
+        .ui-button:active {
+            background-color: var(--color-blue);
+        }
+
+        p {
+            text-align: center;
+            color: var(--color-gray);}
+
+        a {
+
+            color: var(--color-blue);
+        }
+
+        a:hover {
+            color: var(--color-green);
+        }
+
+        a:active {
+            color: var(--color-blue);
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Signin</h1></br>
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <form method="post" action="{% url 'tictactoe_game:signin' %}" class="ui-form">
+        {% if error_message %}
+            <p>{{ error_message }}</p>
+        {% endif %}
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" required class="ui-input"></br>
+        <input type="password" name="password" placeholder="Password" required class="ui-input"></br>
+        <button type="submit" class="ui-button">Signin</button></br>
+    </form>
+    <p>Don't have an account? <a href="/tictactoe_game/register">Register</a></p>
+    <p>Go back to <a href="/tictactoe_game">Home</a></p>
+</body>
+</html>
